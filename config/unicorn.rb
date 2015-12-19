@@ -7,7 +7,7 @@ preload_app true
 before_fork do |_server, _worker|
   # the following is highly recommended for Rails + "preload_app true"
   # as there's no need for the master process to hold a connection
-  defined?(ActiveRecord::Base) and
+  defined?(ActiveRecord::Base) &&
     ActiveRecord::Base.connection.disconnect!
 
   @delayed_job_pid ||= spawn("bundle exec rake work_jobs")
