@@ -28,21 +28,21 @@ describe "FeedsController" do
 
   describe "GET /feeds/:feed_id/edit" do
     it "fetches a feed given the id" do
-      feed = Feed.new(name: 'Rainbows and unicorns', url: 'example.com/feed')
+      feed = Feed.new(name: "Rainbows and unicorns", url: "example.com/feed")
       FeedRepository.should_receive(:fetch).with("123").and_return(feed)
 
       get "/feeds/123/edit"
 
-      last_response.body.should include('Rainbows and unicorns')
-      last_response.body.should include('example.com/feed')
+      last_response.body.should include("Rainbows and unicorns")
+      last_response.body.should include("example.com/feed")
     end
   end
 
   describe "PUT /feeds/:feed_id" do
     it "updates a feed given the id" do
-      feed = FeedFactory.build(url: 'example.com/atom')
+      feed = FeedFactory.build(url: "example.com/atom")
       FeedRepository.should_receive(:fetch).with("123").and_return(feed)
-      FeedRepository.should_receive(:update_feed).with(feed, 'Test', 'example.com/feed')
+      FeedRepository.should_receive(:update_feed).with(feed, "Test", "example.com/feed")
 
       put "/feeds/123", feed_id: "123", feed_name: "Test", feed_url: "example.com/feed"
 
@@ -145,7 +145,7 @@ describe "FeedsController" do
       get "/feeds/export"
 
       last_response.body.should eq some_xml
-      last_response.header["Content-Type"].should include 'application/xml'
+      last_response.header["Content-Type"].should include "application/xml"
       last_response.header["Content-Disposition"].should == "attachment; filename=\"stringer.opml\""
     end
   end
